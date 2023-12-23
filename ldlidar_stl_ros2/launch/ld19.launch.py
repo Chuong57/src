@@ -31,29 +31,30 @@ def generate_launch_description():
       parameters=[
         {'product_name': 'LDLiDAR_LD19'},
         {'topic_name': 'scan'},
-        {'frame_id': 'base_laser'},
+        {'frame_id': 'laser_frame'},
         {'port_name': '/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0'},
         {'port_baudrate': 230400},
         {'laser_scan_dir': True},
-        {'enable_angle_crop_func': False},
+        {'enable_angle_crop_func': True},
         {'angle_crop_min': 135.0},
         {'angle_crop_max': 225.0}
       ]
   )
 
-  # base_link to base_laser tf node
-  base_link_to_laser_tf_node = Node(
-    package='tf2_ros',
-    executable='static_transform_publisher',
-    name='base_link_to_base_laser_ld19',
-    arguments=['0','0','0.18','0','0','0','base_link','base_laser']
-  )
+  # # base_link to base_laser tf node
+  # base_link_to_laser_tf_node = Node(
+  #   package='tf2_ros',
+  #   executable='static_transform_publisher',
+  #   name='base_link_to_base_laser_ld06',
+  #   arguments=['0','0','0.18','0','0','0','odom', 'laser_frame']
+  # )
 
 
   # Define LaunchDescription variable
   ld = LaunchDescription()
 
   ld.add_action(ldlidar_node)
-  ld.add_action(base_link_to_laser_tf_node)
+  # ld.add_action(base_link_to_laser_tf_node)
 
   return ld
+
